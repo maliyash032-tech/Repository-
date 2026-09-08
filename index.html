@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Hub ❤️</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;overflow:hidden}
+body{
+  background:linear-gradient(135deg,#ff4b7d,#ff758c,#ff9a9e);
+  display:flex;align-items:center;justify-content:center;color:white;
+}
+.screen{
+  width:100%;height:100%;display:none;align-items:center;justify-content:center;
+  flex-direction:column;text-align:center;padding:25px;position:relative;
+}
+.screen.active{display:flex}
+.card{
+  width:min(92%,500px);padding:35px 25px;border-radius:30px;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(12px);
+  box-shadow:0 15px 50px rgba(0,0,0,.2);
+}
+h1{font-size:clamp(34px,9vw,64px);margin:10px 0 18px}
+p{font-size:clamp(18px,5vw,25px);line-height:1.5;margin:10px 0 25px}
+button{
+  border:0;border-radius:50px;padding:15px 30px;margin:8px;
+  font-size:19px;font-weight:bold;cursor:pointer;transition:.2s;
+}
+.yes{background:#fff;color:#ff3f70}
+.no{background:#333;color:#fff}
+button:active{transform:scale(.95)}
+.big-love{
+  font-size:clamp(55px,16vw,130px);font-weight:900;
+  animation:pop .8s ease, pulse 1.3s infinite;
+  text-shadow:0 5px 25px rgba(0,0,0,.25);
+}
+.love-sub{font-size:clamp(20px,5vw,30px)}
+.heart{position:absolute;font-size:30px;animation:float 5s linear infinite;opacity:.8}
+@keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes pulse{50%{transform:scale(1.08)}}
+@keyframes float{0%{transform:translateY(110vh) rotate(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-15vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+
+<div id="hearts"></div>
+
+<section id="s1" class="screen active">
+  <div class="card">
+    <div style="font-size:65px">💝</div>
+    <h1>Hey You ❤️</h1>
+    <p>I have something very special to ask you...</p>
+    <button class="yes" onclick="next('s2')">Open My Gift 💌</button>
+  </div>
+</section>
+
+<section id="s2" class="screen">
+  <div class="card">
+    <div style="font-size:60px">🥰</div>
+    <h1>Will you be mine?</h1>
+    <p>You are one of the most special people in my life. ❤️</p>
+    <div>
+      <button class="yes" onclick="yesAnswer()">YES ❤️</button>
+      <button id="noBtn" class="no" onclick="noAnswer()">NO 😜</button>
+    </div>
+    <p id="noMsg" style="font-size:16px;min-height:25px"></p>
+  </div>
+</section>
+
+<section id="s3" class="screen">
+  <div>
+    <div class="big-love">I LOVE YOU ❤️</div>
+    <div class="love-sub">More than words can ever say 🥹💖</div>
+    <div style="font-size:65px;margin-top:25px">💐💋💞</div>
+  </div>
+</section>
+
+<script>
+function next(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function yesAnswer(){
+  next('s3');
+  burstHearts();
+}
+const messages=[
+  "Are you sure? 🥺",
+  "Think again 😜",
+  "NO is not allowed ❤️",
+  "Please press YES 🥹",
+  "Hehe... try again 😂",
+  "You know the answer is YES! 💖"
+];
+let n=0;
+function noAnswer(){
+  const b=document.getElementById('noBtn');
+  document.getElementById('noMsg').textContent=messages[n++%messages.length];
+  const x=(Math.random()*180)-90, y=(Math.random()*100)-50;
+  b.style.transform=`translate(${x}px,${y}px)`;
+}
+function burstHearts(){
+  for(let i=0;i<35;i++){
+    const h=document.createElement('div');
+    h.className='heart'; h.textContent=['❤️','💖','💕','💗','💘'][Math.floor(Math.random()*5)];
+    h.style.left=Math.random()*100+'vw';
+    h.style.animationDuration=(2.5+Math.random()*3)+'s';
+    h.style.fontSize=(20+Math.random()*35)+'px';
+    document.getElementById('hearts').appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  }
+}
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='heart'; h.textContent='❤️';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=(4+Math.random()*4)+'s';
+  document.getElementById('hearts').appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+},700);
+</script>
+</body>
+</html>
